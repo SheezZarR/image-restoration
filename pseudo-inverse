@@ -1,0 +1,4 @@
+from numpy import linalg
+
+def WWplus(matrix) -> list:
+  return linalg.pinv(matrix)
