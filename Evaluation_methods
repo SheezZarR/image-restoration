@@ -1,0 +1,14 @@
+import numpy as np
+# нужно будет сделать pip install scikit-image
+from skimage.metrics import structural_similarity as ssim
+
+
+def mean_squared_error(imageA, imageB):
+    err = np.sum((imageA.astype("float") - imageB.astype("float")) ** 2)
+    err /= float(imageA.shape[0] * imageA.shape[1])
+    # the lower the error, the more "similar"
+    return err
+
+
+def structural_similarity(imageA, imageB):
+    return ssim(imageA, imageB)
