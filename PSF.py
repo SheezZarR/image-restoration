@@ -2,45 +2,25 @@
 
 from typing import List
 
-import numpy
-import numpy as np
 from PIL import Image
-from PIL import ImageFilter as IFil
 
+import cv2 as cv
 
-def generate_conv_matrix(size: int) -> List[List]:
-    pass
-
-
-def matrix_convolution(img_data_vec: List) -> List:
-    box_blur = [
-        [1, 1, 1],
-        [1, 1, 1],
-        [1, 1, 1]
-    ]
-    pass
-
-
-def gaussian_convolution(image_as_vec: List) -> List:
-    pass
-
-
+from skimage.util import random_noise
 
 
 def main() -> None:
-    image = Image.open("samples/pic1.png")
-    print(image.getbands())
-    image_colors = list(image.getdata())    # List of (R, G, B) pixel by pixel
-
-    for row in image_colors:
-        print(row)
-
-    i_filtered = image.filter(IFil.BoxBlur(radius=0.5))
-    i_filtered.show(title="AfterBoxBlur")
-    i_filtered.filter(IFil.GaussianBlur(radius=1)).show(title="AfterGauBlur")
-    print("La Finalle")
-    for row in i_filtered.getdata():
-        print(row)
+    image = cv.imread("samples/Untitled.png", 0)
+    image_sigma_005 = random_noise(image, var=0.05) * 200
+    image_sigma_01 = random_noise(image, var=0.1) * 200
+    image_sigma_005 = cv.GaussianBlur(image_sigma_005, (5, 5), 2) * 1.5
+    image_sigma_01 = cv.GaussianBlur(image_sigma_01, (5, 5), 2) * 1.5
+    image_sigma_01.round(2)
+    image_sigma_005.round(2)
+    image_sigma_01.astype(int)
+    image_sigma_005.astype(int)
+    cv.imwrite("samples/Untitled-Edited-Sigma-005.png", image_sigma_005)
+    cv.imwrite("samples/Untitled-Edited-Sigma-01.png", image_sigma_01)
 
 
 if __name__ == "__main__":
